@@ -54,18 +54,15 @@ function generatePassword() {
 // else if for four negative enteries
 if (!confirmSpecial && !confirmNumber && !confirmUppercase && !confirmLowercase) {
     toSelect = alert("Password must contain at least one!");
-
 }
 // if statement that uses user input prompts to determine their selections
 // else if for four positive selections
 else if (confirmSpecial && confirmNumber && confirmUppercase && confirmLowercase) {
-
     toSelect = special.concat(number, alpha, alphaBeta);
 }
 // if for 3 positive selections
 else if (confirmSpecial && confirmNumber && confirmUppercase) {
   toSelect = special.concat(number, alphaBeta);
-
 }
 else if (confirmSpecial && confirmNumber && confirmLowercase) {
   toSelect = special.concat(number, alpha);
