@@ -2,13 +2,14 @@
 // User input criteria
 var obtainInput;
 var confirmNumber;
-var confirmSpecial;
+var confirmcharacter;
 var confirmUppercase;
 var confirmLowercase;
+var alphaBeta;
 
 // start password criteria
-// Special specials
-special = ["!", "#", "$", "%", "&", "'", "(", ")", "*", "+", ",", "-", ".", "/", " < ", "=", " > ", " ? ", "@", "[",  "]", " ^ ", "_", "`", "{", "|", "}", "~"];
+// Special
+character = ["!", "#", "$", "%", "&", "'", "(", ")", "*", "+", ",", "-", ".", "/", " < ", "=", " > ", " ? ", "@", "[",  "]", " ^ ", "_", "`", "{", "|", "}", "~"];
 // Numbers
 number = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 // Alphabet
@@ -22,19 +23,19 @@ var toUpper = function (x) {
   return x.toUpperCase();
 }
 // create a variable for uppercase conversion
-alphaBeta = alpha.confirmSpecial(toUpper);
+alphaBeta = alpha.map(toUpper);
 // Get references to the #generate element
 var generateBtn = document.querySelector("#generate");
 
-get.addEventListener("click", function() {
+generateBtn.addEventListener("click", function() {
   password = generatePassword();
-  document.getElementById("password").placeholder = password;
+  document.getElementById("password").placeholder = ps;
 });
 
 // Start generatePassword
 function generatePassword() {
   // Start prompt for user input
-  obtainInput = parseInt(prompt("How many specials would you like for your password?  Choose between 8 and 128"));
+  obtainInput = parseInt(prompt("How many characters would you like in your password?  Please choose between 8 and 128"));
   // if statement for user input
   if(!obtainInput) {
     alert("Please input a number");
@@ -45,43 +46,43 @@ function generatePassword() {
 
   } else {
     // continues once user input is validated
-    confirmNumber = confirm("Will this password contain numbers:");
-    confirmSpecial = confirm("Will this password contain special specials?");
-    confirmUppercase = confirm("Will this password contain Uppercase letters?");
-    confirmLowercase = confirm("Will this password contain Lowercase letters?");
+    confirmNumber = confirm("Would you like this password to contain numbers:");
+    confirmcharacter = confirm("Would you like this password to contain special characters?");
+    confirmUppercase = confirm("Would you like this password to contain Uppercase letters?");
+    confirmLowercase = confirm("Would you like this password to contain Lowercase letters?");
 };
 
 // else if for four negative enteries
-if (!confirmSpecial && !confirmNumber && !confirmUppercase && !confirmLowercase) {
+if (!confirmcharacter && !confirmNumber && !confirmUppercase && !confirmLowercase) {
     toSelect = alert("Password must contain at least one!");
 }
 // if statement that uses user input prompts to determine their selections
 // else if for four positive selections
-else if (confirmSpecial && confirmNumber && confirmUppercase && confirmLowercase) {
-    toSelect = special.concat(number, alpha, alphaBeta);
+else if (confirmcharacter && confirmNumber && confirmUppercase && confirmLowercase) {
+    toSelect = character.concat(number, alpha, alphaBeta);
 }
 // if for 3 positive selections
-else if (confirmSpecial && confirmNumber && confirmUppercase) {
-  toSelect = special.concat(number, alphaBeta);
+else if (confirmcharacter && confirmNumber && confirmUppercase) {
+  toSelect = character.concat(number, alphaBeta);
 }
-else if (confirmSpecial && confirmNumber && confirmLowercase) {
-  toSelect = special.concat(number, alpha);
+else if (confirmcharacter && confirmNumber && confirmLowercase) {
+  toSelect = character.concat(number, alpha);
 }
-else if (confirmSpecial && confirmLowercase && confirmUppercase) {
-  toSelect = special.concat(alpha, alphaBeta);
+else if (confirmcharacter && confirmLowercase && confirmUppercase) {
+  toSelect = character.concat(alpha, alphaBeta);
 }
 else if (confirmNumber && confirmLowercase && confirmUppercase) {
   toSelect = number.concat(alpha, alphaBeta);
 }
 // Else if for 2 positive options 
-else if (confirmSpecial && confirmNumber) {
-  toSelect = special.concat(number);
+else if (confirmcharacter && confirmNumber) {
+  toSelect = character.concat(number);
 
-} else if (confirmSpecial && confirmLowercase) {
-  toSelect = special.concat(alpha);
+} else if (confirmcharacter && confirmLowercase) {
+  toSelect = character.concat(alpha);
 
-} else if (confirmSpecial && confirmUppercase) {
-  toSelect = special.concat(alphaBeta);
+} else if (confirmcharacter && confirmUppercase) {
+  toSelect = character.concat(alphaBeta);
 }
 else if (confirmLowercase && confirmNumber) {
   toSelect = alpha.concat(number);
@@ -93,8 +94,8 @@ else if (confirmLowercase && confirmNumber) {
   toSelect = number.concat(alphaBeta);
 }
 // Else if for 1 positive option
-else if (confirmSpecial) {
-  toSelect = special;
+else if (confirmcharacter) {
+  toSelect = character;
 }
 else if (confirmNumber) {
   toSelect = number;
@@ -108,17 +109,36 @@ else if (confirmUppercase) {
 };   
 
 // password variable
+    password = [];
 
+
+  // begin random selection variables:
+  for (var i = 0; i < obtainInput; i++) {
+    var picktoSelect = toSelect[Math.floor(Math.random() * toSelect.length)];
+    password.push(picktoSelect);
+  }
+
+  // This joins the password array and converts it to a string
+    var ps = password.join("");
+      UserInput(ps);
+      return ps;
 }
 
-// Write password to the #password input
-function writePassword() {
-  var password = generatePassword();
-  var passwordText = document.querySelector("#password");
+  // This puts the password value into the text box
+  // changed function input to use textcontent
+  function UserInput(ps) {
+    document.getElementById("password").textContent = ps;
 
-  passwordText.value = password;
+  }
 
-}
+  var write = document.querySelector("#write");
+    write.addEventListener("click", function() {
+    writePassword();
+  });
 
-// Add event listener to generate button
-generateBtn.addEventListener("click", writePassword);
+  // Write password to the #password input
+  function writePassword() {
+    document.getElementById("password").toSelect();
+    document.execCommand("write");
+    alert("Password copied to clipboard!");
+  }
