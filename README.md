@@ -1,2 +1,4 @@
-# Password-Generator
-Webpage that assists in generating a random password based on your inputted criteria
+# Password Generator
+#Program to help manage unique and safe passwords.
+
+#website: https://jyoung0613.github.io/Password-Generator/
